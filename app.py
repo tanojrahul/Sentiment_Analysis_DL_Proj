@@ -1,3 +1,5 @@
+from audioop import cross
+
 from flask import Flask, request, jsonify
 from tensorflow.keras.models import load_model
 import pickle
@@ -6,6 +8,16 @@ import re
 
 # Initialize Flask app
 app = Flask(__name__)
+
+# enable cors
+
+@app.after_request
+def enable_cors(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,POST,OPTIONS')
+    return response
+
 
 # Load the trained model and vectorizer
 try:
